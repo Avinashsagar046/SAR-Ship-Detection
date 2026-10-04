@@ -1,0 +1,74 @@
+# ==============================
+# Python
+# ==============================
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+
+# ==============================
+# Virtual environments
+# ==============================
+.venv/
+venv/
+env/
+
+# ==============================
+# IDE / Editor
+# ==============================
+.vscode/
+.idea/
+
+# ==============================
+# OS generated files
+# ==============================
+.DS_Store
+Thumbs.db
+
+# ==============================
+# HRSID DATASET
+# Do NOT upload the dataset
+# ==============================
+DATASET/images/
+DATASET/annotations/
+DATASET/inshore_offshore/
+
+# ==============================
+# YOLO dataset images
+# Do NOT upload duplicate images
+# ==============================
+yolo_dataset/images/
+
+# ==============================
+# Trained model weights
+# Keep large model files out of Git
+# ==============================
+*.pt
+*.pth
+*.onnx
+
+# ==============================
+# Training / temporary outputs
+# ==============================
+runs/
+yolo_results/
+outputs/
+uploads/
+*.log
+*.tmp
+
+# ==============================
+# Web application generated files
+# ==============================
+web/outputs/
+
+# ==============================
+# Python packaging
+# ==============================
+*.egg-info/
+dist/
+build/
+
+# Demo input/output images
+demo/input/
+demo/output/

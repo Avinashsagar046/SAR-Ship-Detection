@@ -1,0 +1,1116 @@
+/* =========================================================
+   SAR SHIP DETECTOR
+   Main Dashboard Styles
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #071019;
+    color: #f4f7fb;
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   MAIN APP
+   ========================================================= */
+
+.app {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(31, 75, 101, 0.18),
+            transparent 35%
+        ),
+        #071019;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.sidebar {
+    width: 232px;
+    min-width: 232px;
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            180deg,
+            #0b1721 0%,
+            #08131c 100%
+        );
+
+    border-right: 1px solid #243645;
+
+    display: flex;
+    flex-direction: column;
+
+    padding-bottom: 18px;
+
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.brand {
+    height: 84px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 0 20px;
+
+    border-bottom: 1px solid #243645;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+.brand span {
+    color: #36e68b;
+}
+
+.brand-icon {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+
+    border: 2px solid #55a9ff;
+
+    color: #55a9ff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 23px;
+
+    box-shadow:
+        0 0 14px rgba(74, 151, 255, 0.25);
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+.nav {
+    padding: 14px 12px;
+}
+
+.nav button {
+    width: 100%;
+
+    border: none;
+    background: transparent;
+
+    color: #b8c5d0;
+
+    text-align: left;
+
+    padding: 13px 14px;
+
+    margin-bottom: 4px;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.nav button:hover {
+    background: rgba(77, 95, 117, 0.18);
+    color: white;
+}
+
+.nav button.active {
+    background:
+        linear-gradient(
+            90deg,
+            #6932d5,
+            #3860dd
+        );
+
+    color: white;
+
+    box-shadow:
+        0 6px 18px rgba(73, 60, 212, 0.25);
+}
+
+.nav-icon {
+    display: inline-block;
+
+    width: 28px;
+
+    font-size: 20px;
+
+    vertical-align: middle;
+}
+
+
+/* =========================================================
+   TEAM CARD
+   ========================================================= */
+
+.team {
+    margin: auto 15px 0;
+
+    border: 1px solid #395064;
+
+    border-radius: 8px;
+
+    padding: 16px;
+
+    color: #d8e0e7;
+
+    font-size: 12px;
+
+    line-height: 1.65;
+
+    background:
+        rgba(8, 20, 30, 0.72);
+}
+
+.team h4 {
+    color: #36e68b;
+
+    font-size: 14px;
+
+    margin-bottom: 8px;
+}
+
+.guide {
+    margin-top: 18px;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+.main {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 0 16px 22px;
+}
+
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
+.topbar {
+    min-height: 82px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+
+    padding: 10px 160px 10px 30px;
+}
+
+.topbar h1 {
+    font-size: 23px;
+
+    line-height: 1.25;
+
+    font-weight: 700;
+
+    text-align: center;
+}
+
+.topbar p {
+    margin-top: 5px;
+
+    font-size: 17px;
+
+    color: #c2ccd6;
+}
+
+.top-actions {
+    position: absolute;
+
+    right: 0;
+    top: 20px;
+
+    display: flex;
+
+    gap: 10px;
+}
+
+.icon-btn,
+.about-btn {
+    border: 1px solid #273b4d;
+
+    color: white;
+
+    border-radius: 7px;
+
+    height: 40px;
+
+    cursor: pointer;
+}
+
+.icon-btn {
+    width: 40px;
+
+    background: #0e1d29;
+
+    font-size: 19px;
+}
+
+.about-btn {
+    padding: 0 18px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #315bd1,
+            #6b2bd1
+        );
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   WORKFLOW
+   ========================================================= */
+
+.workflow {
+    border: 1px solid #293d4d;
+
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(20, 35, 48, 0.95),
+            rgba(13, 26, 37, 0.95)
+        );
+
+    padding: 16px 22px;
+
+    margin-bottom: 16px;
+}
+
+.steps {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    position: relative;
+}
+
+.steps::before {
+    content: "";
+
+    position: absolute;
+
+    top: 17px;
+
+    left: 7%;
+
+    right: 7%;
+
+    height: 2px;
+
+    background: #3c8665;
+
+    z-index: 0;
+}
+
+.step {
+    position: relative;
+
+    z-index: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 8px;
+
+    min-width: 100px;
+}
+
+.circle {
+    width: 34px;
+    height: 34px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            180deg,
+            #2bc878,
+            #15925a
+        );
+
+    color: white;
+
+    font-weight: bold;
+
+    box-shadow:
+        0 0 0 4px rgba(20, 49, 40, 0.8);
+}
+
+.step label {
+    font-size: 13px;
+
+    color: #f0f4f7;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.card {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(15, 30, 42, 0.98),
+            rgba(10, 23, 33, 0.98)
+        );
+
+    border: 1px solid #263b4c;
+
+    border-radius: 8px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+    color: #32e58b;
+
+    font-size: 14px;
+
+    padding: 13px 14px 10px;
+
+    font-weight: 600;
+
+    border-bottom: 1px solid #263b4c;
+}
+
+
+/* =========================================================
+   TOP FIVE GRID
+   ========================================================= */
+
+.grid5 {
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, minmax(0, 1fr));
+
+    gap: 9px;
+
+    margin-bottom: 14px;
+}
+
+.grid5 .card {
+    min-width: 0;
+}
+
+.image-box {
+    width: 100%;
+
+    height: 220px;
+
+    padding: 7px;
+
+    background: #020507;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+.image-box canvas {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+.desc {
+    min-height: 65px;
+
+    padding: 10px;
+
+    text-align: center;
+
+    font-size: 12px;
+
+    line-height: 1.45;
+
+    color: #d7e0e8;
+}
+
+
+/* =========================================================
+   CFAR LEGEND
+   ========================================================= */
+
+.cf-legend {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-bottom: 7px;
+
+    font-size: 11px;
+}
+
+.green {
+    color: #30ee76;
+}
+
+.red {
+    color: #ff4c4c;
+}
+
+.dot {
+    display: inline-block;
+
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+
+    margin-right: 4px;
+}
+
+.green .dot {
+    background: #30ee76;
+}
+
+.red .dot {
+    background: #ff4c4c;
+}
+
+
+/* =========================================================
+   BOTTOM GRID
+   ========================================================= */
+
+.bottom-grid {
+    display: grid;
+
+    grid-template-columns:
+        1.25fr
+        0.9fr
+        1.05fr;
+
+    gap: 9px;
+
+    margin-bottom: 14px;
+}
+
+
+/* =========================================================
+   METRICS
+   ========================================================= */
+
+.metrics {
+    padding-bottom: 12px;
+}
+
+.metric-cards {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 8px;
+
+    padding: 12px;
+}
+
+.metric {
+    border: 1px solid #263d50;
+
+    border-radius: 7px;
+
+    background: #101f2c;
+
+    padding: 10px;
+
+    text-align: left;
+}
+
+.metric .micon {
+    color: #4f91ff;
+
+    font-size: 18px;
+
+    margin-bottom: 4px;
+}
+
+.metric small {
+    display: block;
+
+    color: #c2ccd4;
+
+    font-size: 11px;
+}
+
+.metric b {
+    display: block;
+
+    margin-top: 3px;
+
+    color: white;
+
+    font-size: 21px;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+table {
+    width: calc(100% - 24px);
+
+    margin: 0 12px;
+
+    border-collapse: collapse;
+
+    font-size: 11px;
+}
+
+th,
+td {
+    border: 1px solid #263d4d;
+
+    padding: 8px 7px;
+
+    text-align: center;
+}
+
+th {
+    background: #142633;
+
+    color: #e5edf4;
+
+    font-weight: 600;
+}
+
+td {
+    color: #d2dbe3;
+
+    background: rgba(9, 22, 32, 0.75);
+}
+
+.status {
+    color: #9eabb7;
+
+    font-size: 11px;
+
+    padding: 9px 12px;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   VISUALIZATION
+   ========================================================= */
+
+.viz {
+    padding-bottom: 16px;
+}
+
+.viz > div {
+    color: #edf3f7;
+}
+
+.chart {
+    height: 245px;
+
+    margin: 20px 15px 0;
+
+    border-left: 1px solid #536272;
+
+    border-bottom: 1px solid #536272;
+
+    position: relative;
+
+    background:
+        repeating-linear-gradient(
+            to top,
+            transparent 0,
+            transparent 48px,
+            rgba(117, 130, 142, 0.15) 49px,
+            rgba(117, 130, 142, 0.15) 50px
+        );
+}
+
+.barrow {
+    height: 100%;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-around;
+
+    padding: 0 20px;
+}
+
+.group {
+    height: 100%;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    gap: 5px;
+}
+
+.bar {
+    width: 22px;
+
+    min-height: 2px;
+
+    transition: height 0.4s ease;
+}
+
+.bar.ca {
+    background: #d39b00;
+}
+
+.bar.os {
+    background: #e6ad16;
+}
+
+.bar.yolo {
+    background: #2da96b;
+}
+
+.xlabels {
+    display: flex;
+
+    justify-content: space-around;
+
+    margin: 8px 8px 0;
+
+    font-size: 10px;
+
+    color: #d2dae2;
+}
+
+.legend2 {
+    text-align: center;
+
+    margin-top: 15px;
+
+    font-size: 11px;
+
+    color: #d1d9df;
+}
+
+.sw {
+    display: inline-block;
+
+    width: 10px;
+    height: 10px;
+
+    margin-right: 4px;
+}
+
+.sw.ca {
+    background: #d39b00;
+}
+
+.sw.os {
+    background: #e6ad16;
+}
+
+.sw.y {
+    background: #2da96b;
+}
+
+
+/* =========================================================
+   DETECTION DETAILS
+   ========================================================= */
+
+.details {
+    padding-bottom: 14px;
+}
+
+.details table {
+    font-size: 10px;
+}
+
+.details th,
+.details td {
+    padding: 7px 5px;
+}
+
+.summary {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 12px 14px 0;
+
+    font-size: 11px;
+
+    color: #dce4eb;
+}
+
+
+/* =========================================================
+   UPLOAD SECTION
+   ========================================================= */
+
+.upload {
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        210px;
+
+    gap: 16px;
+
+    align-items: stretch;
+
+    padding: 14px;
+
+    border: 1px solid #293e4f;
+
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #111f2b,
+            #0d1a25
+        );
+}
+
+.drop {
+    min-height: 90px;
+
+    border: 1px dashed #456174;
+
+    border-radius: 7px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    text-align: center;
+
+    color: #d8e0e7;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.drop:hover {
+    border-color: #35e68a;
+
+    background: rgba(41, 86, 65, 0.08);
+}
+
+.drop strong {
+    font-size: 14px;
+}
+
+.drop small {
+    font-size: 10px;
+
+    color: #a9b6c0;
+}
+
+.browse {
+    display: inline-block;
+
+    padding: 8px 19px;
+
+    border-radius: 6px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #5f27c9,
+            #733ed4
+        );
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+.run {
+    border: none;
+
+    border-radius: 7px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #5c25c8,
+            #7340d4
+        );
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    min-height: 90px;
+
+    box-shadow:
+        0 8px 20px rgba(91, 45, 198, 0.22);
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.run:hover {
+    transform: translateY(-1px);
+}
+
+.run:disabled {
+    cursor: wait;
+
+    opacity: 0.6;
+
+    transform: none;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1300px) {
+
+    .sidebar {
+        width: 210px;
+        min-width: 210px;
+    }
+
+    .grid5 {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+
+    .bottom-grid {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .details {
+        grid-column: span 2;
+    }
+}
+
+
+@media (max-width: 950px) {
+
+    .sidebar {
+        width: 190px;
+        min-width: 190px;
+    }
+
+    .topbar {
+        padding-right: 20px;
+    }
+
+    .top-actions {
+        display: none;
+    }
+
+    .grid5 {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .bottom-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .details {
+        grid-column: auto;
+    }
+
+    .upload {
+        grid-template-columns: 1fr;
+    }
+
+    .run {
+        min-height: 60px;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .app {
+        display: block;
+    }
+
+    .sidebar {
+        position: relative;
+
+        width: 100%;
+        min-width: 100%;
+
+        height: auto;
+        min-height: auto;
+    }
+
+    .team {
+        display: none;
+    }
+
+    .nav {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .main {
+        padding: 0 8px 15px;
+    }
+
+    .topbar h1 {
+        font-size: 18px;
+    }
+
+    .topbar p {
+        font-size: 13px;
+    }
+
+    .steps {
+        overflow-x: auto;
+
+        justify-content: flex-start;
+
+        gap: 30px;
+    }
+
+    .steps::before {
+        display: none;
+    }
+
+    .grid5 {
+        grid-template-columns: 1fr;
+    }
+
+    .metric-cards {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+}
+
+/* =========================================================
+   CURRENT IMAGE / MODEL METRICS
+   ========================================================= */
+
+.metric-section-title {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 12px 0 14px;
+    color: #dce8f2;
+}
+
+.current-image {
+    min-width: 0;
+}
+
+.current-image .metric b {
+    font-size: 24px;
+}
+
+.current-image .status {
+    margin-top: 12px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.5;
+}

@@ -1,0 +1,10 @@
+YOLO11n — HRSID Final Test Evaluation
+
+Dataset: HRSID
+Test images: 1,962
+Image size: 800x800
+
+Precision: 0.902319
+Recall: 0.796690
+mAP50: 0.893586
+mAP50-95: 0.639999

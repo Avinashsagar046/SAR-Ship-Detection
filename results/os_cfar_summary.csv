@@ -1,0 +1,2 @@
+Method,Window_Size,Guard_Size,PFA,Rank_Percentile,Selected_Rank,Training_Cells,IoU_Threshold,Min_Component_Area,Images_Evaluated,TP,FP,FN,Precision,Recall,F1
+OS-CFAR,21,5,0.001,80,333,416,0.5,1,1962,36,64480,5886,0.000558001116002232,0.0060790273556231,0.0010221755302535565

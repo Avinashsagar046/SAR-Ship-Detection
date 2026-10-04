@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>SAR Ship Detector</title>
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}">
+
+<style>
+
+/* ============================================================
+   NO SIDEBAR LAYOUT
+   ============================================================ */
+
+.app.no-sidebar {
+    display: block;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.app.no-sidebar .main {
+    width: 100%;
+    margin-left: 0;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+
+/* ============================================================
+   TOP BAR
+   ============================================================ */
+
+.topbar {
+    position: relative;
+}
+
+.top-actions {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+
+/* ============================================================
+   ABOUT MODAL
+   ============================================================ */
+
+.about-modal {
+
+    display: none;
+
+    position: fixed;
+
+    z-index: 9999;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.78);
+
+    backdrop-filter: blur(6px);
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+}
+
+
+.about-modal.show {
+    display: flex;
+}
+
+
+.about-content {
+
+    width: min(850px, 95%);
+
+    max-height: 88vh;
+
+    overflow-y: auto;
+
+    background: #0c1b27;
+
+    border: 1px solid #284458;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 20px 70px rgba(0, 0, 0, 0.55);
+
+    padding: 30px;
+
+    position: relative;
+}
+
+
+.about-close {
+
+    position: absolute;
+
+    right: 20px;
+    top: 18px;
+
+    width: 38px;
+    height: 38px;
+
+    border-radius: 50%;
+
+    border: 1px solid #37566a;
+
+    background: #142a39;
+
+    color: white;
+
+    font-size: 22px;
+
+    cursor: pointer;
+}
+
+
+.about-close:hover {
+
+    background: #263f50;
+
+}
+
+
+.about-header {
+
+    text-align: center;
+
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid #294355;
+
+    margin-bottom: 22px;
+}
+
+
+.about-header h2 {
+
+    margin: 0 40px 8px 40px;
+
+    color: #28e57b;
+
+    font-size: 26px;
+}
+
+
+.about-header p {
+
+    margin: 0;
+
+    color: #b9c7d2;
+
+    font-size: 15px;
+}
+
+
+.about-section {
+
+    margin-top: 20px;
+}
+
+
+.about-section h3 {
+
+    color: #28e57b;
+
+    margin-bottom: 8px;
+
+    font-size: 18px;
+}
+
+
+.about-section p {
+
+    color: #d3dce3;
+
+    line-height: 1.65;
+
+    margin: 0;
+}
+
+
+.about-flow {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 10px;
+
+    margin-top: 14px;
+}
+
+
+.about-flow div {
+
+    background: #102532;
+
+    border: 1px solid #284557;
+
+    border-radius: 10px;
+
+    padding: 12px 8px;
+
+    text-align: center;
+
+    color: #d8e4ec;
+
+    font-size: 13px;
+}
+
+
+.about-flow strong {
+
+    display: block;
+
+    color: #28e57b;
+
+    margin-bottom: 5px;
+}
+
+
+.team-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 12px;
+
+    margin-top: 12px;
+}
+
+
+.team-member {
+
+    background: #102532;
+
+    border: 1px solid #284557;
+
+    border-radius: 10px;
+
+    padding: 14px;
+
+    color: #dce7ee;
+}
+
+
+.team-member strong {
+
+    color: white;
+
+    display: block;
+
+    margin-bottom: 4px;
+}
+
+
+.guide-box {
+
+    background: #102532;
+
+    border: 1px solid #284557;
+
+    border-radius: 10px;
+
+    padding: 16px;
+
+    color: #dce7ee;
+
+    margin-top: 10px;
+}
+
+
+.guide-box strong {
+
+    color: #28e57b;
+
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+    .about-flow {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+    .team-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .top-actions {
+
+        position: static;
+
+        justify-content: center;
+
+        margin-top: 15px;
+
+    }
+
+    .about-content {
+
+        padding: 20px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ============================================================
+     APPLICATION
+     ============================================================ -->
+
+<div class="app no-sidebar">
+
+
+<!-- ============================================================
+     MAIN CONTENT
+     ============================================================ -->
+
+<main class="main">
+
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+
+<header class="topbar">
+
+    <h1>
+        Comparative Evaluation of CFAR and Deep Learning-Based Ship Detection in High-Resolution SAR Imagery
+    </h1>
+
+    <p>
+        CA-CFAR / OS-CFAR Baselines vs YOLO11n Detection
+    </p>
+
+
+    <div class="top-actions">
+
+        <button
+            class="icon-btn"
+            type="button"
+            title="Theme">
+            ☾
+        </button>
+
+        <button
+            class="about-btn"
+            id="aboutButton"
+            type="button">
+            About Project
+        </button>
+
+        
+
+    </div>
+
+</header>
+
+
+
+<!-- ============================================================
+     WORKFLOW
+     ============================================================ -->
+
+<section class="workflow">
+
+    <div class="steps">
+
+        <div class="step">
+            <div class="circle">1</div>
+            <label>Upload Image</label>
+        </div>
+
+        <div class="step">
+            <div class="circle">2</div>
+            <label>Preprocessing</label>
+        </div>
+
+        <div class="step">
+            <div class="circle">3</div>
+            <label>CA-CFAR / OS-CFAR</label>
+        </div>
+
+        <div class="step">
+            <div class="circle">4</div>
+            <label>YOLO11n Detection</label>
+        </div>
+
+        <div class="step">
+            <div class="circle">5</div>
+            <label>Evaluation</label>
+        </div>
+
+        <div class="step">
+            <div class="circle">6</div>
+            <label>Comparison</label>
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ============================================================
+     IMAGE PROCESSING RESULTS
+     ============================================================ -->
+
+<section class="grid5">
+
+
+    <!-- ORIGINAL -->
+
+    <div class="card">
+
+        <h3 class="card-title">
+            1. Original SAR Image
+        </h3>
+
+        <div class="image-box">
+            <canvas id="original"></canvas>
+        </div>
+
+        <div class="desc">
+            Original uploaded SAR image
+        </div>
+
+    </div>
+
+
+
+    <!-- PREPROCESSING -->
+
+    <div class="card">
+
+        <h3 class="card-title">
+            2. Preprocessed Image
+        </h3>
+
+        <div class="image-box">
+            <canvas id="processed"></canvas>
+        </div>
+
+        <div class="desc">
+            Display-enhanced image (visualization only)
+        </div>
+
+    </div>
+
+
+
+    <!-- CFAR -->
+
+    <div class="card">
+
+        <h3 class="card-title">
+            3. CA-CFAR / OS-CFAR Detection (Baselines)
+        </h3>
+
+        <div class="image-box">
+            <canvas id="cfar"></canvas>
+        </div>
+
+        <div class="desc">
+
+            <div class="cf-legend">
+
+                <span class="green">
+                    <i class="dot"></i>
+                    Detected Target
+                </span>
+
+                &nbsp;&nbsp;
+
+                <span class="red">
+                    <i class="dot"></i>
+                    False Alarm
+                </span>
+
+            </div>
+
+            CA-CFAR Candidates:
+            <span id="cfarDetectionCount">0</span>
+
+            &nbsp; | &nbsp;
+
+            OS-CFAR Candidates:
+            <span id="osCfarDetectionCount">0</span>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- YOLO -->
+
+    <div class="card">
+
+        <h3 class="card-title">
+            4. YOLO11n Detection (Deep Learning)
+        </h3>
+
+        <div class="image-box">
+            <canvas id="yolo"></canvas>
+        </div>
+
+        <div class="desc">
+            Ships detected with bounding boxes and confidence scores
+        </div>
+
+    </div>
+
+
+
+    <!-- COMPARISON -->
+
+    <div class="card">
+
+        <h3 class="card-title">
+            5. Side by Side Comparison
+        </h3>
+
+        <div class="image-box">
+            <canvas id="compare"></canvas>
+        </div>
+
+        <div class="desc">
+            CA-CFAR / OS-CFAR | YOLO11n Detections
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ============================================================
+     BOTTOM SECTION
+     ============================================================ -->
+
+<section class="bottom-grid">
+
+
+<!-- ============================================================
+     PERFORMANCE METRICS
+     ============================================================ -->
+
+<div class="card metrics">
+
+    <h3 class="card-title">
+        6. Performance Metrics
+    </h3>
+
+
+    <div class="metric-section-title">
+        YOLO11n Held-Out Test Performance
+    </div>
+
+
+    <div class="metric-cards">
+
+
+        <div class="metric">
+
+            <div class="micon">◉</div>
+
+            <small>Precision</small>
+
+            <b id="modelPrecision">0.902</b>
+
+        </div>
+
+
+        <div class="metric">
+
+            <div class="micon">✓</div>
+
+            <small>Recall</small>
+
+            <b id="modelRecall">0.797</b>
+
+        </div>
+
+
+        <div class="metric">
+
+            <div class="micon">▥</div>
+
+            <small>mAP@0.5</small>
+
+            <b id="modelMap50">0.894</b>
+
+        </div>
+
+
+        <div class="metric">
+
+            <div class="micon">▤</div>
+
+            <small>mAP@0.5:0.95</small>
+
+            <b id="modelMap5095">0.640</b>
+
+        </div>
+
+
+    </div>
+
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Metric</th>
+
+                <th>YOLO11n</th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+            <tr>
+                <td>Precision</td>
+                <td id="modelPrecisionTable">0.902</td>
+            </tr>
+
+            <tr>
+                <td>Recall</td>
+                <td id="modelRecallTable">0.797</td>
+            </tr>
+
+            <tr>
+                <td>F1-score (common eval @ conf. 0.40)</td>
+                <td id="modelF1Table">0.846</td>
+            </tr>
+
+            <tr>
+                <td>mAP@0.5</td>
+                <td id="modelMap50Table">0.894</td>
+            </tr>
+
+            <tr>
+                <td>mAP@0.5:0.95</td>
+                <td id="modelMap5095Table">0.640</td>
+            </tr>
+
+        </tbody>
+
+    </table>
+
+
+    <div class="status">
+
+        Evaluation on 1,962 held-out test images containing 5,922 ship instances.
+        F1-score is reported separately from the common IoU-based evaluation at confidence 0.40.
+
+    </div>
+
+</div>
+
+
+
+<!-- ============================================================
+     CURRENT IMAGE
+     ============================================================ -->
+
+<div class="card current-image">
+
+    <h3 class="card-title">
+        Current Image Detection
+    </h3>
+
+
+    <div class="metric-section-title">
+        Results for Uploaded SAR Image
+    </div>
+
+
+    <div class="metric-cards">
+
+
+        <div class="metric">
+
+            <div class="micon">🚢</div>
+
+            <small>YOLO Ships</small>
+
+            <b id="currentShips">0</b>
+
+        </div>
+
+
+        <div class="metric">
+
+            <div class="micon">✓</div>
+
+            <small>Avg Confidence</small>
+
+            <b id="currentConfidence">
+                0.000
+            </b>
+
+        </div>
+
+
+        <div class="metric">
+
+            <div class="micon">⌁</div>
+
+            <small>OS-CFAR Candidates</small>
+
+            <b id="currentCFAR">
+                0
+            </b>
+
+        </div>
+
+
+        <div class="metric">
+
+            <div class="micon">!</div>
+
+            <small>OS-CFAR False Alarms</small>
+
+            <b id="currentFP">
+                0
+            </b>
+
+        </div>
+
+
+    </div>
+
+
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Current Image Result</th>
+
+                <th>Value</th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+
+            <tr>
+
+                <td>YOLO Ships Detected</td>
+
+                <td id="currentShipsTable">
+                    0
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>Average Confidence</td>
+
+                <td id="currentConfidenceTable">
+                    0.000
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>OS-CFAR Candidates</td>
+
+                <td id="currentCFARTable">
+                    0
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>CA-CFAR Candidates</td>
+
+                <td id="currentCACFARTable">0</td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>OS-CFAR Candidates</td>
+
+                <td id="currentOSCFARTable">0</td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>OS-CFAR True Positives</td>
+
+                <td id="currentTPTable">
+                    0
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>OS-CFAR False Positives</td>
+
+                <td id="currentFPTable">
+                    0
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>OS-CFAR False Negatives</td>
+
+                <td id="currentFNTable">
+                    0
+                </td>
+
+            </tr>
+
+
+        </tbody>
+
+    </table>
+
+
+    <div class="status">
+
+        Current-image statistics change whenever
+        a new SAR image is uploaded.
+
+    </div>
+
+</div>
+
+
+
+<!-- ============================================================
+     VISUALIZATION
+     ============================================================ -->
+
+<div class="card viz">
+
+    <h3 class="card-title">
+        7. Visualization
+    </h3>
+
+
+    <div style="
+        text-align:center;
+        margin-top:18px;
+    ">
+
+        CFAR Baselines vs YOLO11n Performance Comparison
+        <br>
+        <small>Common evaluation at IoU 0.50; YOLO11n confidence = 0.40</small>
+
+    </div>
+
+
+    <div class="chart">
+
+        <div class="barrow">
+
+            <div class="group">
+                <div class="bar ca" style="height:0.80%"></div>
+                <div class="bar os" style="height:5.07%"></div>
+                <div class="bar yolo" style="height:89.14%"></div>
+            </div>
+
+            <div class="group">
+                <div class="bar ca" style="height:0.12%"></div>
+                <div class="bar os" style="height:0.46%"></div>
+                <div class="bar yolo" style="height:80.41%"></div>
+            </div>
+
+            <div class="group">
+                <div class="bar ca" style="height:0.21%"></div>
+                <div class="bar os" style="height:0.84%"></div>
+                <div class="bar yolo" style="height:84.55%"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="xlabels">
+
+        <span>Precision</span>
+
+        <span>Recall</span>
+
+        <span>F1-score</span>
+
+        
+
+    </div>
+
+
+    <div class="legend2">
+
+        <span class="sw ca"></span>
+        CA-CFAR
+
+        &nbsp;&nbsp;&nbsp;
+
+        <span class="sw os"></span>
+        OS-CFAR
+
+        &nbsp;&nbsp;&nbsp;
+
+        <span class="sw y"></span>
+        YOLO11n (Deep Learning)
+
+    </div>
+
+</div>
+
+
+
+<!-- ============================================================
+     DETECTION DETAILS
+     ============================================================ -->
+
+<div class="card details">
+
+    <h3 class="card-title">
+        8. Detection Details (YOLO11n)
+    </h3>
+
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Label</th>
+
+                <th>Confidence</th>
+
+                <th>
+                    Bounding Box (x1, y1, x2, y2)
+                </th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody id="details">
+
+            <tr>
+
+                <td colspan="4">
+                    No detection yet.
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+
+    <div class="summary">
+
+        <span>
+            Total Detections: 0
+        </span>
+
+        <span>
+            Avg Confidence: 0.000
+        </span>
+
+    </div>
+
+</div>
+
+
+</section>
+
+
+
+<!-- ============================================================
+     UPLOAD SECTION
+     ============================================================ -->
+
+<section class="upload">
+
+
+    <div
+        class="drop"
+        id="drop">
+
+
+        <strong>
+            ☁ Drag & Drop SAR Image Here or
+        </strong>
+
+
+        <label
+            class="browse"
+            for="file">
+
+            Browse
+
+        </label>
+
+
+        <input
+            id="file"
+            type="file"
+            accept=".png,.jpg,.jpeg,.tif,.tiff"
+            hidden>
+
+
+        <small>
+
+            Supported formats:
+            .png, .jpg, .tif
+
+            &nbsp; | &nbsp;
+
+            Recommended size:
+            512×512 to 1024×1024
+
+        </small>
+
+
+    </div>
+
+
+    <button
+        class="run"
+        id="run">
+
+        Run Detection ❯
+
+    </button>
+
+
+</section>
+
+
+<div
+    class="status"
+    id="status">
+
+    Upload a SAR image to begin detection.
+
+</div>
+
+
+</main>
+
+</div>
+
+
+
+<!-- ============================================================
+     ABOUT PROJECT MODAL
+     ============================================================ -->
+
+<div
+    class="about-modal"
+    id="aboutModal">
+
+
+    <div class="about-content">
+
+
+        <button
+            class="about-close"
+            id="aboutClose"
+            type="button">
+
+            ×
+
+        </button>
+
+
+
+        <div class="about-header">
+
+            <h2>
+                Comparative Evaluation of CFAR and Deep Learning-Based Ship Detection in High-Resolution SAR Imagery
+            </h2>
+
+            <p>
+                CA-CFAR / OS-CFAR Baselines vs YOLO11n Detection
+            </p>
+
+        </div>
+
+
+
+        <!-- PROJECT OVERVIEW -->
+
+        <div class="about-section">
+
+            <h3>
+                Project Overview
+            </h3>
+
+            <p>
+
+                This project presents an automatic ship detection system for Synthetic Aperture Radar (SAR) images.
+                The system evaluates two traditional CFAR-based detection methods, CA-CFAR and OS-CFAR, alongside a
+                YOLO11n deep learning object detector. The primary objective is to compare conventional signal-processing
+                approaches with deep learning for ship detection in high-resolution SAR imagery.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- OBJECTIVE -->
+
+        <div class="about-section">
+
+            <h3>
+                Objective
+            </h3>
+
+            <p>
+
+                To develop an automated SAR ship detection pipeline that evaluates CA-CFAR and OS-CFAR traditional detection
+                baselines alongside YOLO11n deep learning detection, and compares their detection performance using a
+                common evaluation framework.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- METHODOLOGY -->
+
+        <div class="about-section">
+
+            <h3>
+                Detection Pipeline
+            </h3>
+
+
+            <div class="about-flow">
+
+
+                <div>
+
+                    <strong>01</strong>
+
+                    SAR Image
+
+                </div>
+
+
+                <div>
+
+                    <strong>02</strong>
+
+                    Preprocessing
+
+                </div>
+
+
+                <div>
+
+                    <strong>03</strong>
+
+                    CA-CFAR / OS-CFAR
+
+                </div>
+
+
+                <div>
+
+                    <strong>04</strong>
+
+                    YOLO11n
+
+                </div>
+
+
+                <div>
+
+                    <strong>05</strong>
+
+                    Evaluation
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- PREPROCESSING -->
+
+        <div class="about-section">
+
+            <h3>
+                Preprocessing
+            </h3>
+
+            <p>
+
+                For visualization, the uploaded SAR image is display-enhanced using intensity normalization and contrast enhancement
+                to improve visual interpretation. These operations are visualization-only and are not fed to the evaluated
+                CFAR or YOLO11n detectors.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- CFAR -->
+
+        <div class="about-section">
+
+            <h3>
+                CA-CFAR / OS-CFAR Baselines
+            </h3>
+
+            <p>
+
+                CA-CFAR (Cell-Averaging CFAR) and OS-CFAR (Ordered Statistics CFAR) are used as traditional signal-processing
+                baselines. Both methods estimate local background statistics from training cells surrounding a guard region
+                and apply adaptive thresholds to identify potential ship targets. OS-CFAR uses an ordered-statistics approach
+                to estimate the background level and is evaluated alongside CA-CFAR under the same dataset and IoU-based
+                evaluation framework.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- YOLO -->
+
+        <div class="about-section">
+
+            <h3>
+                YOLO11n Deep Learning Detector
+            </h3>
+
+            <p>
+
+                A trained YOLO11n object detection model is used
+                to identify ship targets and generate bounding
+                boxes together with confidence scores.
+
+                On the HRSID held-out test set of 1,962 images containing 5,922 ship instances, the Ultralytics evaluation
+                reported Precision 0.902, Recall 0.797, mAP@0.5 0.894, and mAP@0.5:0.95 0.640. Under the common
+                evaluation at confidence 0.40, YOLO11n achieved Precision 0.891, Recall 0.804, and F1-score 0.846.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- TEAM -->
+
+        <div class="about-section">
+
+            <h3>
+                Project Team
+            </h3>
+
+
+            <div class="team-grid">
+
+
+                <div class="team-member">
+
+                    <strong>
+                        1. Avinash Sagar
+                    </strong>
+
+                    Project Team Member
+
+                </div>
+
+
+                <div class="team-member">
+
+                    <strong>
+                        2. Chandan A R
+                    </strong>
+
+                    Project Team Member
+
+                </div>
+
+
+                <div class="team-member">
+
+                    <strong>
+                        3. Chirantana J C
+                    </strong>
+
+                    Project Team Member
+
+                </div>
+
+
+                <div class="team-member">
+
+                    <strong>
+                        4. Dhanush Kumar C M
+                    </strong>
+
+                    Project Team Member
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- GUIDE -->
+
+        <div class="about-section">
+
+            <h3>
+                Project Guide
+            </h3>
+
+
+            <div class="guide-box">
+
+                <strong>
+                    Mrs. VARALAKSHMI B D
+                </strong>
+
+                Assistant Professor<br>
+
+                Department of Computer Science and Engineering<br>
+
+                Acharya Institute of Technology
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+</div>
+
+
+
+<!-- ============================================================
+     ABOUT MODAL SCRIPT
+     ============================================================ -->
+
+<script>
+
+const aboutButton =
+    document.getElementById("aboutButton");
+
+const aboutModal =
+    document.getElementById("aboutModal");
+
+const aboutClose =
+    document.getElementById("aboutClose");
+
+
+if (aboutButton) {
+
+    aboutButton.addEventListener(
+        "click",
+        function () {
+
+            aboutModal.classList.add("show");
+
+        }
+    );
+
+}
+
+
+if (aboutClose) {
+
+    aboutClose.addEventListener(
+        "click",
+        function () {
+
+            aboutModal.classList.remove("show");
+
+        }
+    );
+
+}
+
+
+if (aboutModal) {
+
+    aboutModal.addEventListener(
+        "click",
+        function (event) {
+
+            if (event.target === aboutModal) {
+
+                aboutModal.classList.remove("show");
+
+            }
+
+        }
+    );
+
+}
+
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (
+            event.key === "Escape" &&
+            aboutModal.classList.contains("show")
+        ) {
+
+            aboutModal.classList.remove("show");
+
+        }
+
+    }
+);
+
+</script>
+
+
+
+<!-- ============================================================
+     EXISTING DETECTION JAVASCRIPT
+     ============================================================ -->
+
+<script
+    src="{{ url_for('static', filename='js/script.js') }}">
+</script>
+
+
+</body>
+
+</html>
